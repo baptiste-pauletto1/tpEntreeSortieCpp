@@ -13,6 +13,7 @@
 
 //-------------------------------------------------------- Include système
 #include <iostream>
+#include <fstream>
 #include <cstring>
 using namespace std;
 
@@ -115,6 +116,52 @@ int Catalogue::Rechercher (const char* const* villeDepart, const char* const* vi
     return 0;
 }
 
+void Lire (const string nomDuFichier)
+// Algorithme :
+//     
+{
+  ifstream fichier (nomDuFichier);
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  string valeurCourante;
+  get(valeurCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
+  int nbTrajets = stoi(valeurCourante); 
+  for(int i(0) ; i<nbTrajets ; i++)
+  {
+	getline(valeurCourante,100,','); //Supprime l'indice de la ligne
+   	while(valeurCourante != '\n')
+	{
+		getline(valeurCourante,100,','); // Récupère le type de Trajet
+		if(valeurCourante == "TS")
+		{
+			TrajetSimple * trajetS = creationTrajetSimple(fichier);
+			this->Ajouter(trajetS);
+		}
+		else 
+		{
+			getline(valeurCourante,100,',') // Recupère le nombre de trajets composants le trajet composé
+			int nbTrajetsComposants = stoi(valeurCourante);
+			TrajetCompose * trajetCompose = new TrajetCompose(); 
+			for(int j (0); j < nbTrajetsComposants; i++)
+			{
+				TrajetSimple * trajetSComposant = creationTrajetSimple(fichier);
+				trajetCompose->AjouterSousTrajet(trajetSComposant);
+			}
+			this->Ajouter(trajetCompose);
+		} 
+  	}
+  }
+}
+
+void Lire (const string nomDuFichier, const string & typeDeTrajet);
+
+void Lire (const string nomDuFichier, const string & villeDepart, const string & villeArrivee); 
+// faire un test, si un des deux = "" alors que l'autre sera considéré, sinon les deux.
+
+void Lire (const string nomDuFichier, unsigned int n, unsigned int m);
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -160,4 +207,17 @@ Catalogue::~Catalogue ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
+TrajetSimple & Catalogue::creationTrajetSimple(ifstream & fluxFichier)
+{
+	string villeDepart;
+	string villeArrivee;
+	string moyenDeTransport;
+	getline(villeDepart,100,',');
+	getline(villeArrivee,100,',');
+	getline(moyenDeTransport,100,',');
+
+	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,stoi(moyenDeTransport));
+	return trajet;
+}
+
 

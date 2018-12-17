@@ -14,6 +14,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
 #include "VecteurTrajet.h"
+#include <ifstream>
 
 //------------------------------------------------------------- Constantes
 
@@ -33,7 +34,7 @@ class Catalogue
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void Afficher ( ) const;
+    void Afficher ( ) const; // si on met un flux en paramètre et qu'on formatte, on est alors capable de gérer la sauvegarde
     // Mode d'emploi :
     //     
     // Contrat :
@@ -65,6 +66,44 @@ public:
     //     Recherche et affiche les trajets entre villeDepart
     //     et villeArrivee, directement ou par combinaison de Trajets
 
+    void Lire (const std::string nomDuFichier);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
+    void Lire (const std::string nomDuFichier, const string & typeDeTrajet);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
+    //     const std::string typeDeTrajet : Chaîne de caractères indiquant le type 
+    //				    	    de trajet souhaité. 
+    // Contrat :
+    //     Les informations doivent être au bon format.
+	
+    void Lire (const std::string nomDuFichier, const string & villeDepart, const string & villeArrivee);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
+    //     const std::string villeDepart  : Chaîne de caractères indiquant la ville 
+    //				    	    de départ des trajets souhaitée.
+    //     const std::string villeArrivee : Chaîne de caractères indiquant la ville 
+    //				    	    d'arrivée des trajets souhaitée.  
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
+    void Lire (const std::string nomDuFichier, unsigned int n, unsigned int m);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
+    //
+    //     const int n : variable entière donnant le numéro du premier trajet souhaité
+    //     const int m : variable entière donnant le numéro du dernier trajet souhaité
+    //
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -90,6 +129,11 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
+    TrajetSimple & creationTrajetSimple(ifstream & fluxFichier);
+    // Mode d'emploi :
+    //     ifstream fluxFichier : Flux fichier provenant de l'ouverture de ce dernier
+    //                            et nous permettant de traiter son contenu (référence).
+				    	    
 
 //----------------------------------------------------- Attributs protégés
 VecteurTrajet * leCatalogue;

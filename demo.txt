@@ -1,4 +1,5 @@
+3
 1,TS,Lyon,Bordeaux,train
-2,TC,Lyon,Paris,TS,Lyon,Marseille,bateau,TS,Marseille,Paris,avion
+2,TC,2,Lyon,Marseille,bateau,Marseille,Paris,avion
 3,TS,Lyon,Paris,auto
  

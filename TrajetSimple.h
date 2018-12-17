@@ -12,7 +12,7 @@
 #define TRAJETSIMPLE_H
 
 //--------------------------------------------------- Interfaces utilisées
-# include"Trajet.h"
+#include "Trajet.h"
 
 //------------------------------------------------------------- Constantes
 
