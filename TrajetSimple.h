@@ -17,7 +17,7 @@
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
-enum MoyenTransport {avion,bus,bateau,train,auto};
+enum MoyenTransport {Avion,Bus,Bateau,Train,Auto};
 
 //------------------------------------------------------------------------
 
@@ -70,7 +70,8 @@ public:
     // Contrat :
     //     Crée un nouveau trajet simple par copie de unTrajetSimple
 
-    TrajetSimple (const char* const* villeDepart, const char* const* villeArrivee, const MoyenTransport moyen);
+    TrajetSimple (const char* const* villeDepart, const char* const* villeArrivee, const MoyenTransport moyen); 
+	//TODO: Oter la double étoile, c'est juste un const char*, donc de partout changer partout où l'on construit. ET POUR TRAJET COMPOSE
     // Mode d'emploi :
     //     const char* const* villeDepart : pointeur sur une chaine
     //         de caractères indiquant la ville de départ du trajet

@@ -14,7 +14,8 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
 #include "VecteurTrajet.h"
-#include <ifstream>
+#include "TrajetSimple.h"
+#include <fstream>
 
 //------------------------------------------------------------- Constantes
 

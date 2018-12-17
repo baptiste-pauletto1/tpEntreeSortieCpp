@@ -40,6 +40,7 @@ int main (  )
         cout << "1 - Ajouter un trajet au catalogue" << endl;
         cout << "2 - Afficher le catalogue" << endl;
         cout << "3 - Rechercher un parcours" << endl;
+	cout << "4 - Lire un fichier de Trajet" << endl;
         cout << "0 - Quitter" << endl ;
         cin >> selection;
         switch (selection)
@@ -68,16 +69,10 @@ int main (  )
                         scanf("%d", &moyen);
                         cout << endl;
                         
-                        if (strcmp(depart, arrivee) != 0)
-                        {
-                            TrajetSimple nouveauTrajet = TrajetSimple(&depart, &arrivee, moyen);
-                            catalogueDesTrajets.Ajouter(&nouveauTrajet);
-                        }
-                        else
-                        {
-                            cerr << "Erreur : ce trajet ne va nulle part !" << endl;
-                        }
-
+                        TrajetSimple nouveauTrajet = TrajetSimple(&depart, &arrivee, moyen);
+                        catalogueDesTrajets.Ajouter(&nouveauTrajet);
+                        
+                        
                         delete [] depart;
                         delete [] arrivee;
                         selection = -1;
@@ -160,6 +155,8 @@ int main (  )
                 delete [] arrivee;
                 break;
             }
+	    case 4 :
+		catalogueDesTrajets.Lire("demo.txt");
         }
     }
     while (selection != 0);

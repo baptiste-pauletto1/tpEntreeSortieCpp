@@ -19,9 +19,12 @@ using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "Catalogue.h"
+#include "TrajetCompose.h"
+#include "TrajetSimple.h"
 
 //------------------------------------------------------------- Constantes
-
+#define TAILLE 100
+#define SEPARATEUR ','
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
@@ -74,7 +77,7 @@ int Catalogue::Rechercher (const char* const* villeDepart, const char* const* vi
 {
     if (strcmp(*villeDepart, *villeDestination) != 0)
     {
-        char* villesVisitees[100];
+        char* villesVisitees[TAILLE];
         int nbVillesVisitees = 0;
 
         bool pasDeTrajets = true;
@@ -116,7 +119,7 @@ int Catalogue::Rechercher (const char* const* villeDepart, const char* const* vi
     return 0;
 }
 
-void Lire (const string nomDuFichier)
+void Catalogue::Lire (const string nomDuFichier)
 // Algorithme :
 //     
 {
@@ -125,29 +128,29 @@ void Lire (const string nomDuFichier)
   {
     cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
   }
-  string valeurCourante;
-  get(valeurCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
+  char valeurCourante[TAILLE];
+  fichier.get(valeurCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
   int nbTrajets = stoi(valeurCourante); 
   for(int i(0) ; i<nbTrajets ; i++)
   {
-	getline(valeurCourante,100,','); //Supprime l'indice de la ligne
-   	while(valeurCourante != '\n')
+	fichier.getline(valeurCourante,TAILLE,SEPARATEUR); //Supprime l'indice de la ligne
+   	while(strcmp(valeurCourante,"\n") != 0)
 	{
-		getline(valeurCourante,100,','); // Récupère le type de Trajet
-		if(valeurCourante == "TS")
+		fichier.getline(valeurCourante,TAILLE,SEPARATEUR); // Récupère le type de Trajet
+		if(strcmp(valeurCourante,"TS") ==0)
 		{
-			TrajetSimple * trajetS = creationTrajetSimple(fichier);
-			this->Ajouter(trajetS);
+			TrajetSimple trajetS = creationTrajetSimple(fichier);
+			this->Ajouter(&trajetS);
 		}
 		else 
 		{
-			getline(valeurCourante,100,',') // Recupère le nombre de trajets composants le trajet composé
+			fichier.getline(valeurCourante,TAILLE,SEPARATEUR); // Recupère le nombre de trajets composants le trajet composé
 			int nbTrajetsComposants = stoi(valeurCourante);
 			TrajetCompose * trajetCompose = new TrajetCompose(); 
 			for(int j (0); j < nbTrajetsComposants; i++)
 			{
-				TrajetSimple * trajetSComposant = creationTrajetSimple(fichier);
-				trajetCompose->AjouterSousTrajet(trajetSComposant);
+				TrajetSimple trajetSComposant = creationTrajetSimple(fichier);
+				trajetCompose->AjouterSousTrajet(&trajetSComposant);
 			}
 			this->Ajouter(trajetCompose);
 		} 
@@ -209,15 +212,15 @@ Catalogue::~Catalogue ( )
 //----------------------------------------------------- Méthodes protégées
 TrajetSimple & Catalogue::creationTrajetSimple(ifstream & fluxFichier)
 {
-	string villeDepart;
-	string villeArrivee;
-	string moyenDeTransport;
-	getline(villeDepart,100,',');
-	getline(villeArrivee,100,',');
-	getline(moyenDeTransport,100,',');
+	char villeDepart[TAILLE];
+	char villeArrivee[TAILLE];
+	char moyenDeTransport[TAILLE];
+	fluxFichier.getline(villeDepart,TAILLE,SEPARATEUR);
+	fluxFichier.getline(villeArrivee,TAILLE,SEPARATEUR);
+	fluxFichier.getline(moyenDeTransport,TAILLE,SEPARATEUR);
 
-	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,stoi(moyenDeTransport));
-	return trajet;
+	TrajetSimple * trajet = new TrajetSimple(&villeDepart,&villeArrivee,Avion);
+	return &trajet;
 }
 
 
