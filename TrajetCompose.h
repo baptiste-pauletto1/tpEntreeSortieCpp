@@ -29,7 +29,7 @@ class TrajetCompose : public Trajet
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    virtual char* const* GetDepart( ) const;
+    virtual char* GetDepart( ) const;
     // Mode d'emploi :
     //
     // Contrat :
@@ -37,7 +37,7 @@ public:
     //     de départ du trajet composé
 
 
-    virtual char* const* GetArrivee( ) const;
+    virtual char* GetArrivee( ) const;
     // Mode d'emploi :
     //
     // Contrat :

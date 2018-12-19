@@ -47,7 +47,7 @@ public:
     // Contrat :
     //     Ajoute le Trajet pointé par t au catalogue
 
-    void RechercherSimple (const char* const* villeDepart, const char* const* villeDestination) const;
+    void RechercherSimple (const char* villeDepart, const char* villeDestination) const;
     // Mode d'emploi :
     //     const char* const* villeDepart : un pointeur sur une chaine de caractères 
     //                                      indiquant la ville de départ
@@ -57,7 +57,7 @@ public:
     //     Recherche et affiche les Trajets entre villeDepart
     //     et villeArrivee, sans combinaison de trajets
 
-    int Rechercher (const char* const* villeDepart, const char* const* villeDestination) const;
+    int Rechercher (const char* villeDepart, const char* villeDestination) const;
     // Mode d'emploi :
     //     const char* const* villeDepart : un pointeur sur une chaine de caractères 
     //                                      indiquant la ville de départ
@@ -130,7 +130,7 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    TrajetSimple & creationTrajetSimple(ifstream & fluxFichier);
+    TrajetSimple & CreationTrajetSimple(ifstream & fluxFichier);
     // Mode d'emploi :
     //     ifstream fluxFichier : Flux fichier provenant de l'ouverture de ce dernier
     //                            et nous permettant de traiter son contenu (référence).

@@ -2,7 +2,7 @@ ECHO=@echo
 RM=@rm
 COMP=g++
 EDL=g++
-CPPFLAGS=-g -Wall -ansi -std=c++11 -pedantic -o0 -D MAP
+CPPFLAGS=-g -Wall -ansi -std=c++11 -pedantic -o0
 EDLFLAGS=
 RMFLAGS=-f
 INT=TrajetSimple.h TrajetCompose.h Catalogue.h Trajet.h VecteurTrajet.h

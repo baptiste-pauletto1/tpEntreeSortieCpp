@@ -59,6 +59,7 @@ int main (  )
                         char* depart = new char[101];
                         char* arrivee = new char[101];
                         MoyenTransport moyen;
+			int moyenTmp;
 
                         cout << "Ajout d'un trajet simple" << endl;
                         cout << "Ville de départ : ";
@@ -66,10 +67,11 @@ int main (  )
                         cout << "Ville d'arrivée : ";
                         cin >> arrivee;
                         cout << "Moyen de transport: ";
-                        scanf("%d", &moyen);
+                        scanf("%d", &moyenTmp);
+			moyen = (MoyenTransport) moyenTmp;
                         cout << endl;
                         
-                        TrajetSimple nouveauTrajet = TrajetSimple(&depart, &arrivee, moyen);
+                        TrajetSimple nouveauTrajet = TrajetSimple(depart, arrivee, moyen);
                         catalogueDesTrajets.Ajouter(&nouveauTrajet);
                         
                         
@@ -83,6 +85,7 @@ int main (  )
                         char* depart = new char[101];
                         char* arrivee = new char[101];
                         MoyenTransport moyen;
+			int moyenTmp;
                         int nbTrajets = 1;
 
                         cout << "Ajout d'un trajet composé" << endl;
@@ -95,19 +98,14 @@ int main (  )
                             cout << "Ville d'arrivée : ";
                             cin >> arrivee;
                             cout << "Moyen de transport: ";
-                            scanf("%d", &moyen);
+                            scanf("%d", &moyenTmp);
+		            moyen = (MoyenTransport) moyenTmp;
                             cout << endl;
 
-                            if (strcmp(depart, arrivee) != 0)
-                            {
-                                TrajetSimple nouveauSousTrajet = TrajetSimple(&depart, &arrivee, moyen);
-                                nouveauTrajet.AjouterSousTrajet(&nouveauSousTrajet);
-                                nbTrajets++;
-                            }
-                            else
-                            {
-                                cerr << "Erreur : ce sous-trajet ne va nulle part !" << endl;
-                            } 
+                           
+                            TrajetSimple nouveauSousTrajet = TrajetSimple(depart, arrivee, moyen);
+                            nouveauTrajet.AjouterSousTrajet(&nouveauSousTrajet);
+                            nbTrajets++;
 
                             cout << "Ajouter un sous-trajet ? (1 : OUI; 0 : NON)" << endl;
                             cin >> selection;
@@ -145,11 +143,11 @@ int main (  )
                 cout << endl;
                 if (!methode)
                 {
-                    catalogueDesTrajets.RechercherSimple(&depart, &arrivee);
+                    catalogueDesTrajets.RechercherSimple(depart, arrivee);
                 }
                 else
                 {
-                    catalogueDesTrajets.Rechercher(&depart, &arrivee);
+                    catalogueDesTrajets.Rechercher(depart, arrivee);
                 }
                 delete [] depart;
                 delete [] arrivee;

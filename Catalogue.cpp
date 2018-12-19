@@ -45,7 +45,7 @@ void Catalogue::Ajouter (const Trajet* t)
     leCatalogue->Ajouter(t);	
 }
 
-void Catalogue::RechercherSimple (const char* const* villeDepart, const char* const* villeDestination) const
+void Catalogue::RechercherSimple (const char* villeDepart, const char* villeDestination) const
 // Algorithme :
 //     Pour chacun des Trajets du Catalogue, compare les villes de départ
 //     et d'arrivée avec celles passées en paramètre, et affiche le Trajet 
@@ -55,8 +55,8 @@ void Catalogue::RechercherSimple (const char* const* villeDepart, const char* co
     cout << "======= Recherche Simple =======" << endl;
     for (int i=0; i<leCatalogue->GetNombreDeTrajets(); i++)
     {
-        if (strcmp(*villeDepart, *(leCatalogue->GetTrajet(i)->GetDepart())) == 0
-	        && strcmp(*villeDestination, *(leCatalogue->GetTrajet(i)->GetArrivee())) == 0 )
+        if (strcmp(villeDepart, leCatalogue->GetTrajet(i)->GetDepart()) == 0
+	        && strcmp(villeDestination, leCatalogue->GetTrajet(i)->GetArrivee()) == 0 )
         {
             leCatalogue->GetTrajet(i)->Afficher();
             trouve = true;
@@ -69,13 +69,13 @@ void Catalogue::RechercherSimple (const char* const* villeDepart, const char* co
     cout << endl;
 }
 
-int Catalogue::Rechercher (const char* const* villeDepart, const char* const* villeDestination) const
+int Catalogue::Rechercher (const char* villeDepart, const char* villeDestination) const
 // Algorithme :
 //     Pour chaque trajet, si la ville de départ correspond, alors
 //     on trouve toutes les combinaisons de trajets pouvant mener à
 //     la ville de destination
 {
-    if (strcmp(*villeDepart, *villeDestination) != 0)
+    if (strcmp(villeDepart, villeDestination) != 0)
     {
         char* villesVisitees[TAILLE];
         int nbVillesVisitees = 0;
@@ -85,13 +85,13 @@ int Catalogue::Rechercher (const char* const* villeDepart, const char* const* vi
 
         for (int i=0; i<leCatalogue->GetNombreDeTrajets(); i++)
         {
-            if (strcmp(*villeDepart, *(leCatalogue->GetTrajet(i)->GetDepart())) == 0)
+            if (strcmp(villeDepart, leCatalogue->GetTrajet(i)->GetDepart()) == 0)
             // les trajets qui partent de villeDepart
             {
                 dejaVisite = false;
                 for (int j=0; i<nbVillesVisitees; i++)
                 {
-                    if (strcmp(*(leCatalogue->GetTrajet(i)->GetArrivee()), villesVisitees[j]) == 0)
+                    if (strcmp(leCatalogue->GetTrajet(i)->GetArrivee(), villesVisitees[j]) == 0)
                     {
                         dejaVisite = true;
                     }
@@ -100,9 +100,9 @@ int Catalogue::Rechercher (const char* const* villeDepart, const char* const* vi
                 {
                     pasDeTrajets = false;
                     leCatalogue->GetTrajet(i)->Afficher();
-                    villesVisitees[nbVillesVisitees++] = *(leCatalogue->GetTrajet(i)->GetArrivee());
-                    char* nouveauDepart = *(leCatalogue->GetTrajet(i))->GetArrivee();
-                    this->Rechercher(&nouveauDepart, villeDestination);
+                    villesVisitees[nbVillesVisitees++] = leCatalogue->GetTrajet(i)->GetArrivee();
+                    char* nouveauDepart = leCatalogue->GetTrajet(i)->GetArrivee();
+                    this->Rechercher(nouveauDepart, villeDestination);
                 }
                 
             }
@@ -133,28 +133,37 @@ void Catalogue::Lire (const string nomDuFichier)
   int nbTrajets = stoi(valeurCourante); 
   for(int i(0) ; i<nbTrajets ; i++)
   {
-	fichier.getline(valeurCourante,TAILLE,SEPARATEUR); //Supprime l'indice de la ligne
-   	while(strcmp(valeurCourante,"\n") != 0)
+	cout <<"valeurCOurante : " <<valeurCourante <<endl;
+	fichier.getline(valeurCourante,TAILLE); //Supprime l'indice de la ligne
+	cout <<" après get : " << valeurCourante << endl;
+	fichier.get(valeurCourante,TAILLE,SEPARATEUR); 
+	cout << "ON ATTEND 1 : " << valeurCourante <<endl;
+   	while(*valeurCourante != '\n')
 	{
 		fichier.getline(valeurCourante,TAILLE,SEPARATEUR); // Récupère le type de Trajet
+		fichier.get(valeurCourante,TAILLE,SEPARATEUR);
+		cout << "ON ATTEND TS : " << valeurCourante<<endl;
 		if(strcmp(valeurCourante,"TS") ==0)
 		{
-			TrajetSimple trajetS = creationTrajetSimple(fichier);
+			TrajetSimple trajetS = CreationTrajetSimple(fichier);
 			this->Ajouter(&trajetS);
 		}
 		else 
 		{
 			fichier.getline(valeurCourante,TAILLE,SEPARATEUR); // Recupère le nombre de trajets composants le trajet composé
+			fichier.get(valeurCourante,TAILLE,SEPARATEUR);
+			cout << valeurCourante << endl;
 			int nbTrajetsComposants = stoi(valeurCourante);
 			TrajetCompose * trajetCompose = new TrajetCompose(); 
 			for(int j (0); j < nbTrajetsComposants; i++)
 			{
-				TrajetSimple trajetSComposant = creationTrajetSimple(fichier);
+				TrajetSimple trajetSComposant = CreationTrajetSimple(fichier);
 				trajetCompose->AjouterSousTrajet(&trajetSComposant);
 			}
 			this->Ajouter(trajetCompose);
 		} 
-  	}
+		cout <<"fin de la boucle "<< valeurCourante << endl;  	
+	}
   }
 }
 
@@ -210,7 +219,7 @@ Catalogue::~Catalogue ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
-TrajetSimple & Catalogue::creationTrajetSimple(ifstream & fluxFichier)
+TrajetSimple & Catalogue::CreationTrajetSimple(ifstream & fluxFichier)
 {
 	char villeDepart[TAILLE];
 	char villeArrivee[TAILLE];
@@ -219,8 +228,8 @@ TrajetSimple & Catalogue::creationTrajetSimple(ifstream & fluxFichier)
 	fluxFichier.getline(villeArrivee,TAILLE,SEPARATEUR);
 	fluxFichier.getline(moyenDeTransport,TAILLE,SEPARATEUR);
 
-	TrajetSimple * trajet = new TrajetSimple(&villeDepart,&villeArrivee,Avion);
-	return &trajet;
+	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,Avion);
+	return *trajet;
 }
 
 

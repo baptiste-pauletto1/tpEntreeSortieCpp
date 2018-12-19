@@ -33,14 +33,14 @@ class TrajetSimple : public Trajet
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    virtual char* const* GetDepart () const;
+    virtual char* GetDepart () const;
     // Mode d'emploi :
     // 
     // Contrat :
     //     Renvoie un pointeur sur une chaine de caractère
     //     contenant la ville de départ du trajet
     
-    virtual char* const* GetArrivee() const;
+    virtual char* GetArrivee() const;
     // Mode d'emploi :
     // 
     // Contrat :
@@ -70,7 +70,7 @@ public:
     // Contrat :
     //     Crée un nouveau trajet simple par copie de unTrajetSimple
 
-    TrajetSimple (const char* const* villeDepart, const char* const* villeArrivee, const MoyenTransport moyen); 
+    TrajetSimple (const char* villeDepart, const char* villeArrivee, const MoyenTransport moyen); 
 	//TODO: Oter la double étoile, c'est juste un const char*, donc de partout changer partout où l'on construit. ET POUR TRAJET COMPOSE
     // Mode d'emploi :
     //     const char* const* villeDepart : pointeur sur une chaine

@@ -24,7 +24,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-char* const* TrajetCompose::GetDepart( ) const
+char* TrajetCompose::GetDepart( ) const
 // Algorithme :
 //     Renvoie un pointeur sur la chaine de caractère
 //     contenant la ville de départ du premier trajet de la liste
@@ -32,7 +32,7 @@ char* const* TrajetCompose::GetDepart( ) const
    return laListe->GetTrajet(0)->GetDepart();
 }
 
-char* const* TrajetCompose::GetArrivee( ) const
+char* TrajetCompose::GetArrivee( ) const
 // Algorithme :
 //     Renvoie un pointeur sur la chaine de caractère
 //     contenant la ville d'arrivée du dernier trajet de la liste
@@ -65,7 +65,7 @@ void TrajetCompose::AjouterSousTrajet(Trajet* t)
 //     en faisant appel à la méthode VecteurTrajet::Ajouter()
 {
     if (nombreDeTrajets == 0 
-        || strcmp(*(t->GetDepart()), *(laListe->GetTrajet(nombreDeTrajets - 1)->GetArrivee())) == 0)
+        || strcmp(t->GetDepart(), laListe->GetTrajet(nombreDeTrajets - 1)->GetArrivee()) == 0)
     {
         nombreDeTrajets++;
         laListe->Ajouter(t);

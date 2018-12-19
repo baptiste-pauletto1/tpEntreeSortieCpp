@@ -31,7 +31,7 @@ class Trajet
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    virtual char* const* GetDepart() const = 0;
+    virtual char* GetDepart() const = 0;
     // Mode d'emploi :
     //
     // Contrat :
@@ -39,7 +39,7 @@ public:
     //     la ville de départ du Trajet
 
 
-    virtual char* const* GetArrivee() const = 0;
+    virtual char* GetArrivee() const = 0;
     // Mode d'emploi :
     //
     // Contrat :

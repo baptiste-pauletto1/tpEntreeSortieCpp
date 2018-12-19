@@ -24,19 +24,19 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-char* const* TrajetSimple::GetDepart () const
+char* TrajetSimple::GetDepart () const
 // Algorithme :
 //     Renvoie un pointeur sur la chaine depart
 {
-    return &depart;
+    return depart;
 }
 
 
-char* const* TrajetSimple::GetArrivee () const
+char* TrajetSimple::GetArrivee () const
 // Algorithme :
 //     Renvoie un pointeur sur la chaine arrivee
 {
-    return &arrivee;
+    return arrivee;
 }
 
 void TrajetSimple::Afficher() const
@@ -78,7 +78,7 @@ TrajetSimple::TrajetSimple ( const TrajetSimple & unTrajetSimple )
     leMoyen = unTrajetSimple.leMoyen;
 } //----- Fin de TrajetSimple (constructeur de copie)
 
-TrajetSimple::TrajetSimple (const char* const* villeDepart, const char* const* villeArrivee, const MoyenTransport moyen)
+TrajetSimple::TrajetSimple (const char* villeDepart, const char* villeArrivee, const MoyenTransport moyen)
 // Algorithme :
 //     Initialise depart et drrive par copie du contenu des chaines pointées
 //     par villeDepart et villeArrivée
@@ -87,11 +87,11 @@ TrajetSimple::TrajetSimple (const char* const* villeDepart, const char* const* v
         cout << "Appel au constructeur de <TrajetSimple>" << endl;
     #endif
  
-    depart = new char[strlen(*villeDepart) + 1];
-    strncpy(depart, *villeDepart, strlen(*villeDepart) + 1);
+    depart = new char[strlen(villeDepart) + 1];
+    strcpy(depart,villeDepart);
 
-    arrivee = new char[strlen(*villeArrivee) +1];
-    strncpy(arrivee, *villeArrivee, strlen(*villeArrivee) + 1);
+    arrivee = new char[strlen(villeArrivee) + 1];
+    strcpy(arrivee,villeArrivee);
 
     leMoyen=moyen;
 } //----- Fin de TrajetSimple
