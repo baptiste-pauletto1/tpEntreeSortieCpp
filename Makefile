@@ -22,4 +22,4 @@ $(EXE) : $(OBJ) $(EXE).o
 	$(ECHO) "Compilation de $<"
 	$(COMP) $(CPPFLAGS) -o $@ -c $<
 clean :
-	$(RM) $(RMFLAGS) $(OBJ) $(EXE) core
+	$(RM) $(RMFLAGS) $(OBJ) $(EXE) core test.o

@@ -130,10 +130,10 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    TrajetSimple & CreationTrajetSimple(ifstream & fluxFichier);
+    TrajetSimple * CreationTrajetSimple(char * ligne);
     // Mode d'emploi :
-    //     ifstream fluxFichier : Flux fichier provenant de l'ouverture de ce dernier
-    //                            et nous permettant de traiter son contenu (référence).
+    //     char * ligne : Ligne contenant toutes les informations nécessaires à la 
+    //                    création d'un trajet simple.
 				    	    
 
 //----------------------------------------------------- Attributs protégés

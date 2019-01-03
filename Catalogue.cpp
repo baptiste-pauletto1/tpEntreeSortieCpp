@@ -15,6 +15,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <typeinfo>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -128,43 +129,44 @@ void Catalogue::Lire (const string nomDuFichier)
   {
     cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
   }
-  char valeurCourante[TAILLE];
-  fichier.get(valeurCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
-  int nbTrajets = stoi(valeurCourante); 
+  char ligneCourante[TAILLE];
+  char ligneCouranteCopie[TAILLE];
+  char * pointeurCourant;
+  fichier.get(ligneCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
+  fichier.get();	       // Suppression du retour à la ligne.
+  int nbTrajets = stoi(ligneCourante); 
   for(int i(0) ; i<nbTrajets ; i++)
   {
-	cout <<"valeurCOurante : " <<valeurCourante <<endl;
-	fichier.getline(valeurCourante,TAILLE); //Supprime l'indice de la ligne
-	cout <<" après get : " << valeurCourante << endl;
-	fichier.get(valeurCourante,TAILLE,SEPARATEUR); 
-	cout << "ON ATTEND 1 : " << valeurCourante <<endl;
-   	while(*valeurCourante != '\n')
+	fichier.getline(ligneCourante,TAILLE); //Récupère l'intégralité de la ligne.
+	strcpy(ligneCouranteCopie,ligneCourante); // Ligne utilisée pour le traitement des informations (strtok tronque)
+	pointeurCourant = strtok(ligneCouranteCopie,","); // Ote le numéro de ligne (inutilisé dans cette implémentation de Lire)
+	pointeurCourant = strtok(NULL,","); //Récupère le type de trajet (TS/TC)
+	if(!strcmp(pointeurCourant, "TS"))
 	{
-		fichier.getline(valeurCourante,TAILLE,SEPARATEUR); // Récupère le type de Trajet
-		fichier.get(valeurCourante,TAILLE,SEPARATEUR);
-		cout << "ON ATTEND TS : " << valeurCourante<<endl;
-		if(strcmp(valeurCourante,"TS") ==0)
-		{
-			TrajetSimple trajetS = CreationTrajetSimple(fichier);
-			this->Ajouter(&trajetS);
-		}
-		else 
-		{
-			fichier.getline(valeurCourante,TAILLE,SEPARATEUR); // Recupère le nombre de trajets composants le trajet composé
-			fichier.get(valeurCourante,TAILLE,SEPARATEUR);
-			cout << valeurCourante << endl;
-			int nbTrajetsComposants = stoi(valeurCourante);
-			TrajetCompose * trajetCompose = new TrajetCompose(); 
-			for(int j (0); j < nbTrajetsComposants; i++)
-			{
-				TrajetSimple trajetSComposant = CreationTrajetSimple(fichier);
-				trajetCompose->AjouterSousTrajet(&trajetSComposant);
-			}
-			this->Ajouter(trajetCompose);
-		} 
-		cout <<"fin de la boucle "<< valeurCourante << endl;  	
+		TrajetSimple * trajetS = CreationTrajetSimple(ligneCourante);
+		this->Ajouter(trajetS);
+		delete trajetS;
 	}
-  }
+	else if(!strcmp(pointeurCourant,"TC"))
+	{
+		pointeurCourant = strtok(NULL,","); // Recupère le nombre de trajets composants le trajet composé
+		TrajetCompose * trajetCompose = new TrajetCompose(); 
+		//cout << stoi(pointeurCourant) << endl;
+		int nbTrajetsComposants = 2;
+		for(int j (0); j <nbTrajetsComposants; j++)
+		{
+			
+			fichier.getline(ligneCourante,TAILLE);
+			TrajetSimple * trajetSComposant = CreationTrajetSimple(ligneCourante);
+			trajetCompose->AjouterSousTrajet(trajetSComposant);
+			delete trajetSComposant;
+			
+		}
+		this->Ajouter(trajetCompose);
+		delete trajetCompose;
+	} 
+	fichier.getline(ligneCourante,TAILLE);
+}
 }
 
 void Lire (const string nomDuFichier, const string & typeDeTrajet);
@@ -219,17 +221,22 @@ Catalogue::~Catalogue ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
-TrajetSimple & Catalogue::CreationTrajetSimple(ifstream & fluxFichier)
+TrajetSimple * Catalogue::CreationTrajetSimple(char * ligne)
 {
-	char villeDepart[TAILLE];
-	char villeArrivee[TAILLE];
-	char moyenDeTransport[TAILLE];
-	fluxFichier.getline(villeDepart,TAILLE,SEPARATEUR);
-	fluxFichier.getline(villeArrivee,TAILLE,SEPARATEUR);
-	fluxFichier.getline(moyenDeTransport,TAILLE,SEPARATEUR);
-
-	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,Avion);
-	return *trajet;
+	char * villeDepart;
+	char * villeArrivee;
+	MoyenTransport moyenDeTransport;
+	villeDepart = strtok(ligne,",");
+	villeDepart = strtok(NULL,",");  //On supprime le début de ligne (numLigne et typeTrajet).
+	villeDepart = strtok(NULL,",");
+	villeArrivee = strtok(NULL,",");
+	moyenDeTransport = (MoyenTransport) stoi(strtok(NULL,","));
+	cout <<"villeDep : " << villeDepart << endl;
+	cout <<"villeArr : " << villeArrivee << endl;
+	cout <<"moyT : " << moyenDeTransport << endl;
+	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,moyenDeTransport);
+	cout << "fini créa" <<endl;
+	return trajet;
 }
 
 
