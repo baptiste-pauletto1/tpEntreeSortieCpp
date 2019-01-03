@@ -151,7 +151,6 @@ void Catalogue::Lire (const string nomDuFichier)
 	{
 		pointeurCourant = strtok(NULL,","); 	  // Recupère le nombre de trajets composants le trajet composé
 		TrajetCompose * trajetCompose = new TrajetCompose(); 
-		cout << stoi(pointeurCourant) << endl;
 		int nbTrajetsComposants = stoi(pointeurCourant);
 		for(int j (0); j <nbTrajetsComposants; j++)
 		{
@@ -169,7 +168,51 @@ void Catalogue::Lire (const string nomDuFichier)
 }
 }
 
-void Lire (const string nomDuFichier, const string & typeDeTrajet);
+void Catalogue::Lire (const string nomDuFichier, const string & typeDeTrajet)
+{
+  ifstream fichier (nomDuFichier);
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  char ligneCourante[TAILLE];
+  char ligneCouranteCopie[TAILLE];
+  char * pointeurCourant;
+  fichier.get(ligneCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
+  fichier.get();	       // Suppression du retour à la ligne.
+  int nbTrajets = stoi(ligneCourante); 
+  for(int i(0) ; i<nbTrajets ; i++)
+  {
+	fichier.getline(ligneCourante,TAILLE); 		  //Récupère l'intégralité de la ligne.
+	strcpy(ligneCouranteCopie,ligneCourante); 	  // Ligne utilisée pour le traitement des informations (strtok tronque)
+	pointeurCourant = strtok(ligneCouranteCopie,","); // Ote le numéro de ligne (inutilisé dans cette implémentation de Lire)
+	pointeurCourant = strtok(NULL,","); 		  //Récupère le type de trajet (TS/TC)
+	if(!strcmp(pointeurCourant,"TS") && !strcmp(pointeurCourant,typeDeTrajet.c_str()))
+	{
+		TrajetSimple * trajetS = CreationTrajetSimple(ligneCourante);
+		this->Ajouter(trajetS);
+		delete trajetS;
+	}
+	else if(!strcmp(pointeurCourant,"TC") && !strcmp(pointeurCourant,typeDeTrajet.c_str()))
+	{
+		pointeurCourant = strtok(NULL,","); 	  // Recupère le nombre de trajets composants le trajet composé
+		TrajetCompose * trajetCompose = new TrajetCompose(); 
+		int nbTrajetsComposants = stoi(pointeurCourant);
+		for(int j (0); j <nbTrajetsComposants; j++)
+		{
+			
+			fichier.getline(ligneCourante,TAILLE);
+			TrajetSimple * trajetSComposant = CreationTrajetSimple(ligneCourante);
+			trajetCompose->AjouterSousTrajet(trajetSComposant);
+			delete trajetSComposant;
+			
+		}
+		this->Ajouter(trajetCompose);
+		delete trajetCompose;
+	} 
+	fichier.getline(ligneCourante,TAILLE);
+}
+}
 
 void Lire (const string nomDuFichier, const string & villeDepart, const string & villeArrivee); 
 // faire un test, si un des deux = "" alors que l'autre sera considéré, sinon les deux.

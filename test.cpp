@@ -154,7 +154,36 @@ int main (  )
                 break;
             }
 	    case 4 :
-		catalogueDesTrajets.Lire("demo.txt");
+		cout << "Commencez par entrer le nom du fichier (chemin d'accès)" << endl;
+		string nomFichier;
+		cin >> nomFichier;
+                cout << "Lecture fichier de données" << endl;
+                cout << "1 - Lecture sans filtre" << endl;
+                cout << "2 - Filtre de sélection selon le type de Trajet" << endl;
+                cout << "3 - Filtre de sélection selon une ville de départ et/ou d'arrivée" << endl;
+                cout << "4 - Filtre de sélection selon les indices des trajets" << endl;
+                cout << "0 - Retour" << endl ;
+                cin >> selection;
+                switch (selection)
+		{
+			case 1:
+				catalogueDesTrajets.Lire(nomFichier);
+				break;
+			case 2:
+				cout << "Choix du type de Trajet" << endl;
+				cout << "1 - Uniquement les trajets simples" << endl;
+				cout << "2 - Uniquement les trajets composés" << endl;
+				cin >> selection;
+				switch(selection){
+					case 1:
+						catalogueDesTrajets.Lire(nomFichier,"TS");
+						break;
+					case 2:
+						catalogueDesTrajets.Lire(nomFichier,"TC");
+						break;
+				}
+				break;
+		}
         }
     }
     while (selection != 0);
