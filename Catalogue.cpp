@@ -137,10 +137,10 @@ void Catalogue::Lire (const string nomDuFichier)
   int nbTrajets = stoi(ligneCourante); 
   for(int i(0) ; i<nbTrajets ; i++)
   {
-	fichier.getline(ligneCourante,TAILLE); //Récupère l'intégralité de la ligne.
-	strcpy(ligneCouranteCopie,ligneCourante); // Ligne utilisée pour le traitement des informations (strtok tronque)
+	fichier.getline(ligneCourante,TAILLE); 		  //Récupère l'intégralité de la ligne.
+	strcpy(ligneCouranteCopie,ligneCourante); 	  // Ligne utilisée pour le traitement des informations (strtok tronque)
 	pointeurCourant = strtok(ligneCouranteCopie,","); // Ote le numéro de ligne (inutilisé dans cette implémentation de Lire)
-	pointeurCourant = strtok(NULL,","); //Récupère le type de trajet (TS/TC)
+	pointeurCourant = strtok(NULL,","); 		  //Récupère le type de trajet (TS/TC)
 	if(!strcmp(pointeurCourant, "TS"))
 	{
 		TrajetSimple * trajetS = CreationTrajetSimple(ligneCourante);
@@ -149,10 +149,10 @@ void Catalogue::Lire (const string nomDuFichier)
 	}
 	else if(!strcmp(pointeurCourant,"TC"))
 	{
-		pointeurCourant = strtok(NULL,","); // Recupère le nombre de trajets composants le trajet composé
+		pointeurCourant = strtok(NULL,","); 	  // Recupère le nombre de trajets composants le trajet composé
 		TrajetCompose * trajetCompose = new TrajetCompose(); 
-		//cout << stoi(pointeurCourant) << endl;
-		int nbTrajetsComposants = 2;
+		cout << stoi(pointeurCourant) << endl;
+		int nbTrajetsComposants = stoi(pointeurCourant);
 		for(int j (0); j <nbTrajetsComposants; j++)
 		{
 			
@@ -231,9 +231,6 @@ TrajetSimple * Catalogue::CreationTrajetSimple(char * ligne)
 	villeDepart = strtok(NULL,",");
 	villeArrivee = strtok(NULL,",");
 	moyenDeTransport = (MoyenTransport) stoi(strtok(NULL,","));
-	cout <<"villeDep : " << villeDepart << endl;
-	cout <<"villeArr : " << villeArrivee << endl;
-	cout <<"moyT : " << moyenDeTransport << endl;
 	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,moyenDeTransport);
 	cout << "fini créa" <<endl;
 	return trajet;
