@@ -214,9 +214,57 @@ void Catalogue::Lire (const string nomDuFichier, const string & typeDeTrajet)
 }
 }
 
-void Lire (const string nomDuFichier, const string & villeDepart, const string & villeArrivee); 
+void Catalogue::Lire (const string nomDuFichier, const string & villeDepart, const string & villeArrivee)
 // faire un test, si un des deux = "" alors que l'autre sera considéré, sinon les deux.
-
+{
+  ifstream fichier (nomDuFichier);
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  char ligneCourante[TAILLE];
+  char ligneCouranteCopie[TAILLE];
+  char * pointeurCourant;
+  fichier.get(ligneCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
+  fichier.get();	       // Suppression du retour à la ligne.
+  int nbTrajets = stoi(ligneCourante); 
+  for(int i(0) ; i<nbTrajets ; i++)
+  {
+	fichier.getline(ligneCourante,TAILLE); 		  //Récupère l'intégralité de la ligne.
+	strcpy(ligneCouranteCopie,ligneCourante); 	  // Ligne utilisée pour le traitement des informations (strtok tronque)
+	pointeurCourant = strtok(ligneCouranteCopie,","); // Ote le numéro de ligne (inutilisé dans cette implémentation de Lire)
+	pointeurCourant = strtok(NULL,","); 		  //Récupère le type de trajet (TS/TC)
+	if(!strcmp(pointeurCourant,"TS"))
+	{
+		TrajetSimple * trajetS = CreationTrajetSimple(ligneCourante);
+		if(VerificationsInfoTrajet(*trajetS,villeDepart,villeArrivee))
+		{
+				this->Ajouter(trajetS);
+		}
+		delete trajetS;
+	}
+	else if(!strcmp(pointeurCourant,"TC"))
+	{
+		pointeurCourant = strtok(NULL,","); 	  // Recupère le nombre de trajets composants le trajet composé
+		TrajetCompose * trajetCompose = new TrajetCompose(); 
+		int nbTrajetsComposants = stoi(pointeurCourant);
+		for(int j (0); j <nbTrajetsComposants; j++)
+		{
+			
+			fichier.getline(ligneCourante,TAILLE);
+			TrajetSimple * trajetSComposant = CreationTrajetSimple(ligneCourante);
+			trajetCompose->AjouterSousTrajet(trajetSComposant);
+			delete trajetSComposant;
+			
+		}
+		if(VerificationsInfoTrajet(*trajetCompose,villeDepart,villeArrivee)){
+			this->Ajouter(trajetCompose);
+		}
+		delete trajetCompose;
+	} 
+	fichier.getline(ligneCourante,TAILLE);
+  }
+}
 void Lire (const string nomDuFichier, unsigned int n, unsigned int m);
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -275,8 +323,29 @@ TrajetSimple * Catalogue::CreationTrajetSimple(char * ligne)
 	villeArrivee = strtok(NULL,",");
 	moyenDeTransport = (MoyenTransport) stoi(strtok(NULL,","));
 	TrajetSimple * trajet = new TrajetSimple(villeDepart,villeArrivee,moyenDeTransport);
-	cout << "fini créa" <<endl;
 	return trajet;
+}
+
+bool Catalogue::VerificationsInfoTrajet(const Trajet & trajet, const string & villeDep, const string & villeArr) const
+{
+	if(!strcmp(villeDep.c_str(),"-")){
+		if(!strcmp(villeArr.c_str(),"-")) return true;
+		else if(!strcmp(trajet.GetArrivee(),villeArr.c_str())) return true;
+		else return false;
+	}
+	else if(!strcmp(villeArr.c_str(),"-")){
+		if(!strcmp(trajet.GetDepart(),villeDep.c_str())) return true;
+		else return false;
+	}
+	else if(!strcmp(trajet.GetDepart(),villeDep.c_str()) && !strcmp(trajet.GetArrivee(),villeArr.c_str()))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }
 
 

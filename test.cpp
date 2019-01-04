@@ -168,6 +168,7 @@ int main (  )
 		{
 			case 1:
 				catalogueDesTrajets.Lire(nomFichier);
+				cout << "Opération d'import terminée ! " << endl;
 				break;
 			case 2:
 				cout << "Choix du type de Trajet" << endl;
@@ -182,6 +183,19 @@ int main (  )
 						catalogueDesTrajets.Lire(nomFichier,"TC");
 						break;
 				}
+				cout << "Opération d'import terminée ! " << endl;
+				break;
+			case 3:
+				cout << "Choix de la ville de départ et/ou d'arrivée" << endl;
+				cout << "Tapez un tiret (-) puis entrée pour ignorer un des deux champs" << endl;
+				cout << "Premièrement, la ville de départ :" << endl;
+				string villeDep;
+				cin >> villeDep;
+				cout << "Deuxièmement, la ville d'arrivée" << endl;
+				string villeArr;
+				cin >> villeArr;
+				catalogueDesTrajets.Lire(nomFichier,villeDep,villeArr);
+				cout << "Opération d'import terminée ! " << endl;
 				break;
 		}
         }

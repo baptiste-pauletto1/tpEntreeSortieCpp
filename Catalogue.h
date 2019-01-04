@@ -132,9 +132,17 @@ protected:
 //----------------------------------------------------- Méthodes protégées
     TrajetSimple * CreationTrajetSimple(char * ligne);
     // Mode d'emploi :
+    //     Créé un trajet simple à partir d'une ligne extraite d'un fichier.
     //     char * ligne : Ligne contenant toutes les informations nécessaires à la 
     //                    création d'un trajet simple.
-				    	    
+	
+    bool VerificationsInfoTrajet(const Trajet & trajet, const string & villeDep, const string & villeArr) const;		    	    
+    // Mode d'emploi :
+    //     Vérifie la conformité des informations du trajet avant de l'ajouter.
+    //     const string & villeDep : String contenant la ville de départ souhaitée 
+    //                               pour la lecture filtrée.
+    //     const string & villeArr : String contenant la ville d'arrivée souhaitée 
+    //                               pour la lecture filtrée.
 
 //----------------------------------------------------- Attributs protégés
 VecteurTrajet * leCatalogue;
