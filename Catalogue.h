@@ -94,7 +94,7 @@ public:
     // Contrat :
     //     Les informations doivent être au bon format.
 
-    void Lire (const std::string nomDuFichier, unsigned int n, unsigned int m);
+    void Lire (const std::string nomDuFichier, const int n, const int m);
     // Mode d'emploi :
     //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
     //				    	    d'accès au fichier de sauvegarde 

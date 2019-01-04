@@ -32,6 +32,10 @@ using namespace std;
 int main (  )
 {
     int selection;
+    string villeDep;
+    string villeArr;
+    int n;
+    int m;
     Catalogue catalogueDesTrajets = Catalogue();
 
     do 
@@ -189,12 +193,19 @@ int main (  )
 				cout << "Choix de la ville de départ et/ou d'arrivée" << endl;
 				cout << "Tapez un tiret (-) puis entrée pour ignorer un des deux champs" << endl;
 				cout << "Premièrement, la ville de départ :" << endl;
-				string villeDep;
 				cin >> villeDep;
 				cout << "Deuxièmement, la ville d'arrivée" << endl;
-				string villeArr;
 				cin >> villeArr;
 				catalogueDesTrajets.Lire(nomFichier,villeDep,villeArr);
+				cout << "Opération d'import terminée ! " << endl;
+				break;
+			case 4:
+				cout << "Choix de l'intervalle de sélection [n,m]" << endl;
+				cout << "Saisissez n, valeur minimale de l'intervalle" << endl;
+				cin >> n;
+				cout << "Saisissez m, valeur maximale de l'intervalle" << endl;
+				cin >> m;
+				catalogueDesTrajets.Lire(nomFichier,n,m);
 				cout << "Opération d'import terminée ! " << endl;
 				break;
 		}

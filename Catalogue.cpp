@@ -265,7 +265,65 @@ void Catalogue::Lire (const string nomDuFichier, const string & villeDepart, con
 	fichier.getline(ligneCourante,TAILLE);
   }
 }
-void Lire (const string nomDuFichier, unsigned int n, unsigned int m);
+
+void Catalogue::Lire (const string nomDuFichier, const int n,const int m)
+// Algorithme :
+//
+{
+  ifstream fichier (nomDuFichier);
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  char ligneCourante[TAILLE];
+  char ligneCouranteCopie[TAILLE];
+  char * pointeurCourant;
+  int indiceDeLigne;
+  fichier.get(ligneCourante,2);// Nombre maximal de trajets dans le catalogue stocké : 99
+  fichier.get();	       // Suppression du retour à la ligne.
+  int nbTrajets = stoi(ligneCourante); 
+  for(int i(0) ; i<nbTrajets ; i++)
+  {
+	fichier.getline(ligneCourante,TAILLE); 		  //Récupère l'intégralité de la ligne.
+	strcpy(ligneCouranteCopie,ligneCourante); 	  // Ligne utilisée pour le traitement des informations (strtok tronque)
+	pointeurCourant = strtok(ligneCouranteCopie,",");
+	indiceDeLigne = stoi(pointeurCourant);
+	pointeurCourant = strtok(NULL,","); 		  //Récupère le type de trajet (TS/TC)
+	if(!strcmp(pointeurCourant,"TS"))
+	{
+		if(indiceDeLigne >= n && indiceDeLigne <= m)
+		{
+			TrajetSimple * trajetS = CreationTrajetSimple(ligneCourante);
+			this->Ajouter(trajetS);
+			delete trajetS;
+		}
+	}
+	else if(!strcmp(pointeurCourant,"TC"))
+	{
+		pointeurCourant = strtok(NULL,","); 	  // Recupère le nombre de trajets composants le trajet composé
+		int nbTrajetsComposants = stoi(pointeurCourant);
+		if(indiceDeLigne < n || indiceDeLigne > m)// Boucle permettant de sauter les n lignes correspondantes au trajet composé	
+		{
+			for(int i (0) ; i<=nbTrajetsComposants; i++)
+			{
+				fichier.getline(ligneCourante,TAILLE);
+			}
+			continue; // Le continue est la clé puisqu'après avoir décalé le curseur dans le fichier, il nous permet de recommencer la boucle.
+		}
+		TrajetCompose * trajetCompose = new TrajetCompose(); 
+		for(int j (0); j <nbTrajetsComposants; j++)
+		{
+			fichier.getline(ligneCourante,TAILLE);
+			TrajetSimple * trajetSComposant = CreationTrajetSimple(ligneCourante);
+			trajetCompose->AjouterSousTrajet(trajetSComposant);
+			delete trajetSComposant;
+		}
+		this->Ajouter(trajetCompose);
+		delete trajetCompose;
+	} 
+	fichier.getline(ligneCourante,TAILLE);
+  }
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 
