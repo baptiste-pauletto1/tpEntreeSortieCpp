@@ -53,6 +53,12 @@ public:
     // Contrat :
     //     Affiche les caractéristiques du trajet
 
+    virtual void Formater (ofstream & ofs) const;
+    // Mode d'emploi :
+    // 
+    // Contrat :
+    //     Formate les caractéristiques du trajet simple
+
     virtual Trajet* GetTrajet() const;
     // Mode d'emploi :
     // 
@@ -71,7 +77,6 @@ public:
     //     Crée un nouveau trajet simple par copie de unTrajetSimple
 
     TrajetSimple (const char* villeDepart, const char* villeArrivee, const MoyenTransport moyen); 
-	//TODO: Oter la double étoile, c'est juste un const char*, donc de partout changer partout où l'on construit. ET POUR TRAJET COMPOSE
     // Mode d'emploi :
     //     const char* const* villeDepart : pointeur sur une chaine
     //         de caractères indiquant la ville de départ du trajet

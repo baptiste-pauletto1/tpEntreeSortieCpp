@@ -51,6 +51,13 @@ public:
     // Contrat :
     //     Affiche l'ensemble des trajets composant le trajet composé
 
+    virtual void Formater(ofstream & ofs) const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //     Affiche l'ensemble des trajets composant le trajet composé
+    //     mais de manière formatée pour la sauvegarde
+
     virtual Trajet* GetTrajet() const;
     // Mode d'emploi :
     //

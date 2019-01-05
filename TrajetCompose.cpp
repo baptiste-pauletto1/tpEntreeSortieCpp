@@ -12,6 +12,7 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+#include <fstream>
 #include <iostream>
 #include <cstring>
 using namespace std;
@@ -47,6 +48,12 @@ void TrajetCompose::Afficher() const
     cout << "===== TRAJET COMPOSE =====" <<endl;
 	laListe->Afficher();
 	cout << "=== FIN TRAJET COMPOSE ===" << endl << endl;
+}
+
+void TrajetCompose::Formater(ofstream & ofs) const
+{
+    ofs << "TC" << ',' << laListe->GetNombreDeTrajets() << endl;
+    laListe->Formater(ofs);
 }
 
 Trajet* TrajetCompose::GetTrajet() const

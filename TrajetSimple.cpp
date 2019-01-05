@@ -12,6 +12,7 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+#include <fstream>
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -48,6 +49,13 @@ void TrajetSimple::Afficher() const
     cout << "Arrivee : " << arrivee << endl;
     cout << "Moyen de transport : " << leMoyen << endl;
     cout << "--- Fin Trajet Simple ---" << endl << endl;
+}
+
+void TrajetSimple::Formater(ofstream & ofs) const
+// Algorithme :
+//     
+{
+	ofs << "TS," << depart << ',' << arrivee << ',' << leMoyen <<endl;
 }
 
 Trajet* TrajetSimple::GetTrajet() const

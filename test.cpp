@@ -32,6 +32,7 @@ using namespace std;
 int main (  )
 {
     int selection;
+    string nomFichier;
     string villeDep;
     string villeArr;
     int n;
@@ -44,7 +45,8 @@ int main (  )
         cout << "1 - Ajouter un trajet au catalogue" << endl;
         cout << "2 - Afficher le catalogue" << endl;
         cout << "3 - Rechercher un parcours" << endl;
-	cout << "4 - Lire un fichier de Trajet" << endl;
+	cout << "4 - Lire un fichier catalogue" << endl;
+	cout << "5 - Sauver un fichier catalogue" << endl;
         cout << "0 - Quitter" << endl ;
         cin >> selection;
         switch (selection)
@@ -159,7 +161,6 @@ int main (  )
             }
 	    case 4 :
 		cout << "Commencez par entrer le nom du fichier (chemin d'accès)" << endl;
-		string nomFichier;
 		cin >> nomFichier;
                 cout << "Lecture fichier de données" << endl;
                 cout << "1 - Lecture sans filtre" << endl;
@@ -209,7 +210,25 @@ int main (  )
 				cout << "Opération d'import terminée ! " << endl;
 				break;
 		}
-        }
+		break;
+            case 5:
+		cout << "Commencez par entrer le nom du fichier (chemin d'accès) du fichier de sauvegarde" << endl;
+		cin >> nomFichier;
+                cout << "Sauvegarde du catalogue" << endl;
+                cout << "1 - Sauvegarde sans filtre" << endl;
+                cout << "2 - Filtre de sélection selon le type de Trajet" << endl;
+                cout << "3 - Filtre de sélection selon une ville de départ et/ou d'arrivée" << endl;
+                cout << "4 - Filtre de sélection selon les indices des trajets" << endl;
+                cout << "0 - Retour" << endl ;
+                cin >> selection;
+                switch (selection)
+		{
+			case 1:
+				catalogueDesTrajets.Sauver(nomFichier);
+				break;
+		}
+		break;
+	}
     }
     while (selection != 0);
 

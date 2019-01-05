@@ -165,7 +165,8 @@ void Catalogue::Lire (const string nomDuFichier)
 		delete trajetCompose;
 	} 
 	fichier.getline(ligneCourante,TAILLE);
-}
+  }
+  fichier.close();
 }
 
 void Catalogue::Lire (const string nomDuFichier, const string & typeDeTrajet)
@@ -211,7 +212,8 @@ void Catalogue::Lire (const string nomDuFichier, const string & typeDeTrajet)
 		delete trajetCompose;
 	} 
 	fichier.getline(ligneCourante,TAILLE);
-}
+  }
+  fichier.close();
 }
 
 void Catalogue::Lire (const string nomDuFichier, const string & villeDepart, const string & villeArrivee)
@@ -264,6 +266,7 @@ void Catalogue::Lire (const string nomDuFichier, const string & villeDepart, con
 	} 
 	fichier.getline(ligneCourante,TAILLE);
   }
+  fichier.close();
 }
 
 void Catalogue::Lire (const string nomDuFichier, const int n,const int m)
@@ -323,6 +326,27 @@ void Catalogue::Lire (const string nomDuFichier, const int n,const int m)
 	} 
 	fichier.getline(ligneCourante,TAILLE);
   }
+  fichier.close();
+}
+
+void Catalogue::Sauver(const string & nomDuFichier)
+// Algorithme :
+//
+{
+  ofstream fichier (nomDuFichier);
+  int compteurDeTrajets = 0;
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  fichier << leCatalogue->GetNombreDeTrajets() << endl;
+  for(int i (0); i<leCatalogue->GetNombreDeTrajets();i++){
+	fichier << ++compteurDeTrajets << ',';
+	leCatalogue->GetTrajet(i)->Formater(fichier);
+	fichier << endl;
+  }
+  
+  fichier.close(); 
 }
 
 //------------------------------------------------- Surcharge d'opérateurs

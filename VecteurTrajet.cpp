@@ -12,6 +12,7 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+#include <fstream>
 #include <iostream>
 using namespace std;
 
@@ -73,6 +74,18 @@ void VecteurTrajet::Afficher() const
 	{
 		lesTrajets[i]->Afficher();
 	}
+}
+
+void VecteurTrajet::Formater(ofstream & ofs) const
+//Algorithme :
+//
+{
+	for(int i (0); i<nombreDeTrajets; i++)
+	{	
+		ofs << i+1 << ',';
+		lesTrajets[i]->Formater(ofs);
+	}
+
 }
 
 //------------------------------------------------- Surcharge d'opérateurs

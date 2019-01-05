@@ -74,7 +74,7 @@ public:
     // Contrat :
     //     Les informations doivent être au bon format.
 
-    void Lire (const std::string nomDuFichier, const string & typeDeTrajet);
+    void Lire (const std::string nomDuFichier, const std::string & typeDeTrajet);
     // Mode d'emploi :
     //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
     //				    	    d'accès au fichier de sauvegarde 
@@ -83,7 +83,7 @@ public:
     // Contrat :
     //     Les informations doivent être au bon format.
 	
-    void Lire (const std::string nomDuFichier, const string & villeDepart, const string & villeArrivee);
+    void Lire (const std::string nomDuFichier, const std::string & villeDepart, const std::string & villeArrivee);
     // Mode d'emploi :
     //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
     //				    	    d'accès au fichier de sauvegarde 
@@ -102,6 +102,13 @@ public:
     //     const int n : variable entière donnant le numéro du premier trajet souhaité
     //     const int m : variable entière donnant le numéro du dernier trajet souhaité
     //
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
+    void Sauver (const std::string & nomDuFichier);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
     // Contrat :
     //     Les informations doivent être au bon format.
 

@@ -52,6 +52,12 @@ public:
     // Contrat :
     //     Affiche les caractéristiques d'un Trajet
 
+    virtual void Formater(ofstream & ofs) const = 0;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //     Formate les caractéristiques d'un Trajet
+
     virtual Trajet* GetTrajet() const = 0;
     // Mode d'emploi :
     //

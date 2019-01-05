@@ -58,6 +58,13 @@ public:
     //
     // Contrat :
     //     Affiche les Trajets contenus dans le Vecteur
+
+    void Formater(ofstream & ofs) const;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //     Formate les Trajets contenus dans le Vecteur
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
