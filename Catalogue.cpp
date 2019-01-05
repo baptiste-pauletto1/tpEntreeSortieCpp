@@ -345,7 +345,65 @@ void Catalogue::Sauver(const string & nomDuFichier)
 	leCatalogue->GetTrajet(i)->Formater(fichier);
 	fichier << endl;
   }
-  
+  fichier.close(); 
+}
+
+void Catalogue::Sauver(const string & nomDuFichier, const string & typeDeTrajet)
+{
+  ofstream fichier (nomDuFichier);
+  int compteurDeTrajets = 0;
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  fichier << leCatalogue->GetNombreDeTrajets() << endl;
+  for(int i (0); i<leCatalogue->GetNombreDeTrajets();i++){
+	fichier << ++compteurDeTrajets << ',';
+	leCatalogue->GetTrajet(i)->Formater(fichier);
+	fichier << endl;
+  }
+  fichier.close(); 
+}
+
+void Catalogue::Sauver(const string & nomDuFichier, const string & villeDepart, const string & villeArrivee)
+{
+  ofstream fichier (nomDuFichier);
+  int compteurDeTrajets (0);
+  int compteurDeTrajetsValides (0);
+  for(int i (0);i<leCatalogue->GetNombreDeTrajets();i++)
+  {
+	if(VerificationsInfoTrajet(*leCatalogue->GetTrajet(i),villeDepart,villeArrivee)) ++compteurDeTrajetsValides;
+  }
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  fichier << compteurDeTrajetsValides << endl;
+  for(int i (0); i<leCatalogue->GetNombreDeTrajets();i++){
+	if(VerificationsInfoTrajet(*leCatalogue->GetTrajet(i),villeDepart,villeArrivee))
+	{
+		fichier << ++compteurDeTrajets << ',';
+		leCatalogue->GetTrajet(i)->Formater(fichier);
+		fichier << endl;
+	}
+  }
+  fichier.close(); 
+}
+
+void Catalogue::Sauver(const string & nomDuFichier, const int n, const int m)
+{
+  ofstream fichier (nomDuFichier);
+  int compteurDeTrajets (0);
+  if ( ! fichier)
+  {
+    cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
+  }
+  fichier << (m-n+1) << endl;
+  for(int i (n); i<=m;i++){
+	fichier << ++compteurDeTrajets << ',';
+	leCatalogue->GetTrajet(i-1)->Formater(fichier);
+	fichier << endl;
+  }
   fichier.close(); 
 }
 

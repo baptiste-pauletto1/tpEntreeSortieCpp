@@ -225,6 +225,28 @@ int main (  )
 		{
 			case 1:
 				catalogueDesTrajets.Sauver(nomFichier);
+				cout << "Opération de sauvegarde terminée ! " << endl;
+				break;
+			case 2:
+				break;
+			case 3:
+				cout << "Choix de la ville de départ et/ou d'arrivée" << endl;
+				cout << "Tapez un tiret (-) puis entrée pour ignorer un des deux champs" << endl;
+				cout << "Premièrement, la ville de départ :" << endl;
+				cin >> villeDep;
+				cout << "Deuxièmement, la ville d'arrivée" << endl;
+				cin >> villeArr;
+				catalogueDesTrajets.Sauver(nomFichier,villeDep,villeArr);
+				cout << "Opération de sauvegarde terminée ! " << endl;
+				break;
+			case 4:
+				cout << "Choix de l'intervalle de sélection [n,m]" << endl;
+				cout << "Saisissez n, valeur minimale de l'intervalle" << endl;
+				cin >> n;
+				cout << "Saisissez m, valeur maximale de l'intervalle" << endl;
+				cin >> m;
+				catalogueDesTrajets.Sauver(nomFichier,n,m);
+				cout << "Opération de sauvegarde terminée ! " << endl;
 				break;
 		}
 		break;

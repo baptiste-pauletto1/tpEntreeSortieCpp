@@ -112,6 +112,35 @@ public:
     // Contrat :
     //     Les informations doivent être au bon format.
 
+    void Sauver (const std::string & nomDuFichier, const string & typeDeTrajet);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
+    //     const std::string typeDeTrajet : Chaîne de caractères indiquant le type 
+    //				    	    de trajet souhaité. 
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
+    void Sauver (const std::string & nomDuFichier, const std::string & villeDepart, const std::string & villeArrivee);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde 
+    //     const std::string villeDepart  : Chaîne de caractères indiquant la ville 
+    //				    	    de départ des trajets souhaitée.
+    //     const std::string villeArrivee : Chaîne de caractères indiquant la ville 
+    //				    	    d'arrivée des trajets souhaitée.  
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
+    void Sauver (const std::string & nomDuFichier, const int n, const int m);
+    // Mode d'emploi :
+    //     const std::string nomDuFichier : Chaîne de caractères indiquant le chemin 
+    //				    	    d'accès au fichier de sauvegarde /
+    //     const int n : variable entière donnant le numéro du premier trajet souhaité
+    //     const int m : variable entière donnant le numéro du dernier trajet souhaité
+    // Contrat :
+    //     Les informations doivent être au bon format.
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
