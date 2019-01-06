@@ -228,6 +228,19 @@ int main (  )
 				cout << "Opération de sauvegarde terminée ! " << endl;
 				break;
 			case 2:
+				cout << "Choix du type de Trajet" << endl;
+				cout << "1 - Uniquement les trajets simples" << endl;
+				cout << "2 - Uniquement les trajets composés" << endl;
+				cin >> selection;
+				switch(selection){
+					case 1:
+						catalogueDesTrajets.Sauver(nomFichier,"TS");
+						break;
+					case 2:
+						catalogueDesTrajets.Sauver(nomFichier,"TC");
+						break;
+				}
+				cout << "Opération de sauvegarde terminée ! " << endl;
 				break;
 			case 3:
 				cout << "Choix de la ville de départ et/ou d'arrivée" << endl;

@@ -59,6 +59,12 @@ public:
     // Contrat :
     //     Formate les caractéristiques du trajet simple
 
+    virtual string GetType () const;
+    // Mode d'emploi :
+    // 
+    // Contrat :
+    //     Retourne le type de trajet, ici TS (pour TrajetSimple)
+
     virtual Trajet* GetTrajet() const;
     // Mode d'emploi :
     // 

@@ -58,6 +58,12 @@ public:
     //     Affiche l'ensemble des trajets composant le trajet composé
     //     mais de manière formatée pour la sauvegarde
 
+    virtual string GetType () const;
+    // Mode d'emploi :
+    // 
+    // Contrat :
+    //     Retourne le type de trajet, ici TC (pour TrajetCompose)
+
     virtual Trajet* GetTrajet() const;
     // Mode d'emploi :
     //

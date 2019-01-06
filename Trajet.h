@@ -58,6 +58,12 @@ public:
     // Contrat :
     //     Formate les caractéristiques d'un Trajet
 
+    virtual string GetType() const = 0;
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //     Retourne le type de Trajet, utile pour le filtre de sauvegarde
+
     virtual Trajet* GetTrajet() const = 0;
     // Mode d'emploi :
     //

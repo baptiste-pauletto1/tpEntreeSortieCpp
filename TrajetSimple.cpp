@@ -58,6 +58,11 @@ void TrajetSimple::Formater(ofstream & ofs) const
 	ofs << "TS," << depart << ',' << arrivee << ',' << leMoyen <<endl;
 }
 
+string TrajetSimple::GetType() const
+{
+	return "TS";
+}
+
 Trajet* TrajetSimple::GetTrajet() const
 // Algorithme :
 //     renvoie un pointeur sur un nouveau trajet simple créé par copie

@@ -56,6 +56,11 @@ void TrajetCompose::Formater(ofstream & ofs) const
     laListe->Formater(ofs);
 }
 
+string TrajetCompose::GetType () const
+{
+	return "TC";
+}
+
 Trajet* TrajetCompose::GetTrajet() const
 // Algorithme :
 //     Retourne un nouvel objet TrajetComposé construit à partir

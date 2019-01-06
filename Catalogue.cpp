@@ -352,15 +352,23 @@ void Catalogue::Sauver(const string & nomDuFichier, const string & typeDeTrajet)
 {
   ofstream fichier (nomDuFichier);
   int compteurDeTrajets = 0;
+  int compteurDeTrajetsValides (0);
+  for(int i (0);i<leCatalogue->GetNombreDeTrajets();i++)
+  {
+	if(!strcmp(leCatalogue->GetTrajet(i)->GetType().c_str(),typeDeTrajet.c_str())) ++compteurDeTrajetsValides;
+  }
   if ( ! fichier)
   {
     cerr << "Erreur d'ouverture du fichier <" << nomDuFichier << ">" <<endl;
   }
-  fichier << leCatalogue->GetNombreDeTrajets() << endl;
+  fichier << compteurDeTrajetsValides << endl;
   for(int i (0); i<leCatalogue->GetNombreDeTrajets();i++){
-	fichier << ++compteurDeTrajets << ',';
-	leCatalogue->GetTrajet(i)->Formater(fichier);
-	fichier << endl;
+	if(!strcmp(leCatalogue->GetTrajet(i)->GetType().c_str(),typeDeTrajet.c_str()))
+	{
+		fichier << ++compteurDeTrajets << ',';
+		leCatalogue->GetTrajet(i)->Formater(fichier);
+		fichier << endl;
+	}
   }
   fichier.close(); 
 }
