@@ -1,9 +1,9 @@
 3
-1,TS,Lyon,Bordeaux,2
+1,TS,Lyon,Bordeaux,3
 
 2,TC,2
-1,TS,Lyon,Marseille,1
-2,TS,Marseille,Paris,2
+1,TS,Lyon,Marseille,2
+2,TS,Marseille,Paris,0
 
-3,TS,Lyon,Paris,0
+3,TS,Lyon,Paris,4
  
